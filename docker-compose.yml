@@ -7,18 +7,20 @@ services:
       - "8888:80"
       - "2222:22"
     volumes:
-      - "./nginx.conf:/etc/nginx/conf.d/weather-transfer-files.conf"
-      - "weather-files-data:/usr/share/nginx/data"
+      - "./nginx.conf:/etc/nginx/conf.d/default.conf"
+      - "./content:/usr/share/nginx/html"
+      - "files:/usr/share/files"
+    restart: unless-stopped
     # depends-on:
     #   - 'ftp'
-  ftp:
+  ftp-server:
     image: stilliard/pure-ftpd
     container_name: pure-ftpd
     ports:
       - "21:21"
       - "30000-30009:30000-30009"
     volumes:
-      - "weather-files-data:/home/ftpusers/"
+      - "files:/home/ftpusers/"
       - "./ftp/passwd:/etc/pure-ftpd/passwd"
     environment:
       PUBLICHOST: "localhost"
@@ -28,4 +30,4 @@ services:
     restart: unless-stopped
 
 volumes:
-  weather-files-data:
+  files:

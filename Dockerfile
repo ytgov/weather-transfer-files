@@ -2,6 +2,6 @@ FROM nginx:alpine
 
 COPY content /usr/share/nginx/html
 
-COPY nginx.conf /etc/nginx/conf.d/weather-transfer-files.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-COPY ./ftp/data /usr/share/nginx/data
+COPY ./files /usr/share/files
