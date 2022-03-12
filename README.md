@@ -22,3 +22,14 @@
 ```bash
 ftp -vn localhost 21
 ```
+
+## Production
+
+Create a user account via:
+
+```bash
+docker-compose exec ftp sh
+
+pure-pw useradd some-user -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /home/ftpusers/some-user
+# then follow the password prompts
+```
