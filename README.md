@@ -12,13 +12,13 @@
 
 `docker-compose up`
 
-3. Go to `localhost:8888` in your browser to see the app
+3. Go to `localhost` in your browser to see the app
    landing page.
 
-4. Go to `localhost:8888/files` to see the upload files by group.
+4. Go to `localhost/files` to see the upload files by group.
 
 5. To add files to a specific group log in as that group via `ftp`
 
 ```bash
-ftp localhost:8888
+ftp -vn localhost 21
 ```
