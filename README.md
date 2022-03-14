@@ -23,9 +23,7 @@
 ftp -vn localhost 21
 ```
 
-## Production
-
-Create a user account via:
+Create a user new account via:
 
 ```bash
 docker-compose exec ftp bash
@@ -35,3 +33,14 @@ mkdir /home/ftpusers/group-a
 pure-pw useradd group-a -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /home/ftpusers/group-a
 # then enter the password twice
 ```
+
+## Production
+
+Duplicate the example .env file and edit as desired.
+
+```bash
+cp ftp/.env.example ftp/.env
+nano ftp/.env
+```
+
+Boot the app via `docker-compose up -d`
