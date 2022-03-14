@@ -17,11 +17,7 @@
 
 4. Go to `localhost/files` to see the upload files by group.
 
-5. To add files to a specific group log in as that group via `ftp`
-
-```bash
-ftp -vn localhost 21
-```
+5. Connect to the server via FileZilla to test connection.
 
 Create a user new account via:
 
