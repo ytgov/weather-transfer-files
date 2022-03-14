@@ -30,6 +30,10 @@ Create a user account via:
 ```bash
 docker-compose exec ftp sh
 
-pure-pw useradd some-user -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /home/ftpusers/some-user
+mkdir /home/ftpusers/group-a
+pure-pw useradd group-a -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftp-super-user -d /home/ftpusers/group-a <<PASSWD
+  test
+  test
+PASSWD
 # then follow the password prompts
 ```
