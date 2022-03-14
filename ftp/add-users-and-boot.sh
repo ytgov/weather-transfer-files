@@ -2,6 +2,7 @@ function add_user_a () {
     echo 'Adding virual user A'
     local user_home="$FTP_USER_HOME/$VIRTUAL_USER_A"
     mkdir -p "$user_home"
+    chown $FTP_USER_NAME "$user_home"
 
     local passwd_file="$(mktemp)"
     echo "$VIRTUAL_USER_A_PASSWORD
@@ -14,6 +15,7 @@ function add_user_b () {
     echo 'Adding virual user B'
     local user_home="$FTP_USER_HOME/$VIRTUAL_USER_B"
     mkdir -p "$user_home"
+    chown $FTP_USER_NAME "$user_home"
 
     local passwd_file="$(mktemp)"
     echo "$VIRTUAL_USER_B_PASSWORD
