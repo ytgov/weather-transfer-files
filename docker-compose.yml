@@ -2,33 +2,36 @@ version: "3"
 
 services:
   web:
-    build: ./web
+    build:
+      context: .
+      dockerfile: ./web/Dockerfile
     ports:
       - "80:80"
     volumes:
-      - "./nginx.conf:/etc/nginx/conf.d/default.conf"
-      - "./content:/usr/share/nginx/html"
+      - "./web/nginx.conf:/etc/nginx/nginx.conf"
       - "files:/usr/share/files"
     restart: unless-stopped
     depends_on:
       - ftp
   ftp:
-    build: ./ftp
+    build:
+      context: .
+      dockerfile: ./ftp/Dockerfile
     env_file:
-      - ./.env
+      - ./ftp/.env
     ports:
       - "21:21"
       - "30000-30009:30000-30009"
     volumes:
       - "files:/home/ftpusers/"
-      - "passwd:/etc/pure-ftpd/passwd"
+      - "ftp-passwords:/etc/pure-ftpd/passwd"
     environment:
       PUBLICHOST: "localhost"
       FTP_USER_NAME: ftpusers
-      FTP_USER_PASS: "$FTP_USER_PASS"
+      # FTP_USER_PASS from env
       FTP_USER_HOME: /home/ftpusers
     restart: unless-stopped
 
 volumes:
   files:
-  passwd:
+  ftp-passwords:

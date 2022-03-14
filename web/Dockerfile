@@ -1,7 +1,5 @@
 FROM nginx:alpine
 
-COPY content /usr/share/nginx/html
+COPY ./web/nginx.conf /etc/nginx/nginx.conf
 
-COPY nginx.conf /etc/nginx/nginx.conf
-
-COPY ../files /usr/share/files
+COPY ./files /usr/share/files
