@@ -28,12 +28,10 @@ ftp -vn localhost 21
 Create a user account via:
 
 ```bash
-docker-compose exec ftp sh
+docker-compose exec ftp bash
 
+# inside container
 mkdir /home/ftpusers/group-a
-pure-pw useradd group-a -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftp-super-user -d /home/ftpusers/group-a <<PASSWD
-  test
-  test
-PASSWD
-# then follow the password prompts
+pure-pw useradd group-a -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /home/ftpusers/group-a
+# then enter the password twice
 ```
