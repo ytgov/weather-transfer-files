@@ -30,6 +30,8 @@ services:
       FTP_USER_NAME: ftpusers
       # FTP_USER_PASS from env
       FTP_USER_HOME: /home/ftpusers
+      PURE_PASSWDFILE: /etc/pure-ftpd/passwd/pureftpd.passwd
+      PURE_DBFILE: /etc/pure-ftpd/pureftpd.pdb
     restart: unless-stopped
 
 volumes:
