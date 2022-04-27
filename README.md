@@ -15,7 +15,7 @@
 3. Go to `localhost` in your browser to see the app
    landing page.
 
-4. Go to `localhost/files` to see the upload files by group.
+4. Go to `localhost/` to see the upload files by group.
 
 5. Connect to the server via `sftp` to test connection.
 
