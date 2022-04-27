@@ -1,1 +1,12 @@
 .env
+ssh_host_ed25519_key
+ssh_host_ed25519_key.pub
+ssh_host_rsa_key
+ssh_host_rsa_key.pub
+users.conf
+md5-server-fingerprint.txt
+sha256-server-fingerprint.txt
+
+sftp/keys_by_user/*
+!/sftp/keys_by_user/example_user
+!/sftp/keys_by_user/.gitkeep
