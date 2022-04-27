@@ -49,9 +49,14 @@ ssh-keygen -lf sftp/ssh_host_ed25519_key.pub > files/sha256-server-fingerprint.t
 ssh-keygen -l -E md5 -f sftp/ssh_host_ed25519_key.pub > files/md5-server-fingerprint.txt
 ```
 
-4. Boot the app via `docker-compose up -d --build`
+5. (optional) Auto-load public keys for a specific user by adding the key to the `sftp/keys_by_user` folder.
+The format is `keys_by_user/user-name/.ssh/keys/id_ed25519_key.pub`, as seen in the
+`sftp/keys_by_user/example_user` folder.
 
-5. (optional) For passwordless login, load public ssh keys for a given user via:
+6. Boot the app via `docker-compose up -d --build`
+
+7. (optional) For passwordless login, load public ssh keys for a given user via:
+> Only needed if you didn't auto-load the keys earlier.
 ```bash
 container_id=$(docker ps -q --filter name="sftp")
 
