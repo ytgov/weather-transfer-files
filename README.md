@@ -17,26 +17,66 @@
 
 4. Go to `localhost/files` to see the upload files by group.
 
-5. Connect to the server via FileZilla to test connection.
-
-Create a user new account via:
+5. Connect to the server via `sftp` to test connection.
 
 ```bash
-docker-compose exec ftp bash
-
-# inside container
-mkdir /home/ftpusers/group-a
-pure-pw useradd group-a -f /etc/pure-ftpd/passwd/pureftpd.passwd -m -u ftpuser -d /home/ftpusers/group-a
-# then enter the password twice
+sftp -P 22 group_b@localhost
+# verify server fingerprint
+# enter group b's password as seen in the sftp/users.conf file
 ```
 
 ## Production
 
-Duplicate the example .env file and edit as desired.
+1. Duplicate the example sftp/users.conf.example file and edit as desired.
 
 ```bash
-cp ftp/.env.example ftp/.env
-nano ftp/.env
+cp sftp/users.conf.example sftp/users.conf
+nano sftp/users.conf
 ```
 
-Boot the app via `docker-compose up -d`
+2. Generate a ed25519 and rsa key files via:
+```bash
+ssh-keygen -t ed25519 -f sftp/ssh_host_ed25519_key < /dev/null
+ssh-keygen -t rsa -b 4096 -f sftp/ssh_host_rsa_key < /dev/null
+```
+
+4. You can generate a fingerprint for a public key using ssh-keygen like so:
+```bash
+# sha256 fingerprint
+ssh-keygen -lf sftp/ssh_host_ed25519_key.pub > files/sha256-server-fingerprint.txt
+
+# or md5 fingerprint
+ssh-keygen -l -E md5 -f sftp/ssh_host_ed25519_key.pub > files/md5-server-fingerprint.txt
+```
+
+4. Boot the app via `docker-compose up -d --build`
+
+5. (optional) For passwordless login, load public ssh keys for a given user via:
+```bash
+container_id=$(docker ps -q --filter name="sftp")
+
+docker cp ~/.ssh/id_ed25519.pub $container_id:/tmp/
+docker-compose exec sftp bash
+
+# inside the container
+# create an .ssh director owned by root
+user="group_a"
+uid="$(id -u "$user")"
+user_ssh_folder="/home/$user/.ssh"
+mkdir -p "$user_ssh_folder"
+
+# add key to the authorized keys file and set owner to appropriate user
+user_authorized_keys_file="$user_ssh_folder/authorized_keys"
+cat "/tmp/id_ed25519.pub" >> "$user_authorized_keys_file"
+chown "$uid" "$user_authorized_keys_file"
+chmod 600 "$user_authorized_keys_file"
+```
+
+# For End-Users
+1. Set up an example .ssh/config.
+```bash
+Host weather-transfer-files
+    HostName some-host-name
+    USER group_a
+    Port 22
+```

@@ -12,24 +12,15 @@ services:
       - "files:/usr/share/files"
     restart: unless-stopped
     depends_on:
-      - ftp
-  ftp:
+      - sftp
+  sftp:
     build:
       context: .
-      dockerfile: ./ftp/Dockerfile
-    env_file:
-      - ./ftp/.env
+      dockerfile: ./sftp/Dockerfile
     ports:
-      - "21:21"
-      - "30000-30009:30000-30009"
+      - "22:22"
     volumes:
-      - "files:/home/ftpusers/"
-    environment:
-      FTP_USER_NAME: ftpuser
-      # FTP_USER_PASS from env
-      FTP_USER_HOME: /home/ftpusers
-      PURE_PASSWDFILE: "/etc/pure-ftpd/passwd/pureftpd.passwd"
-      PURE_DBFILE: "/etc/pure-ftpd/pureftpd.pdb"
+      - "files:/home/"
     restart: unless-stopped
 
 volumes:
